@@ -1,0 +1,34 @@
+\section*{Felhasználói dokumentáció}
+
+\subsection*{A program célja}
+A felhasználó polinom függvényeket ad meg a programnak, mely annak grafikonját ascii art formájában
+vagy egy fájlba menti, vagy interaktív módban megjeleníti a konzolon.
+
+\subsection*{Megkötések}
+A program csak polinom függvényeket tud értelmezni, szögfüggvények / hatványfüggvényekre hibát ír ki.
+
+
+\subsection*{A program által elfogadott kapcsolók}
+A programot az alábbi sematika szerint kell futtatni:
+\begin{verbatim}
+    plottr [kapcsolók] <függvény>
+\end{verbatim}
+A kapcsolókat tetszőleges sorrendben, opcionálisan megadhatók:\\
+ - interactive: a felhasználó egy interaktív tui felületen kezelheti a programot\\
+ - offset <x:num> <y:num>: Az origótól való x és y eltolás\\
+ - o / out <fájl:file>: A függvény képének (txt formátumban ) mentési helye.
+        Ha nincs megadva, akkor a standard kimenetre ír\\
+ - s / scale <width:num>: A vízszintes tengely szélessége\\
+ - h / help: A program futtatását kiíró kapcsoló\\
+
+\subsection*{Interaktív mód parancsai}
+Ha a programot az -interactive kapcsolóval indítjuk el, akkor futás közben
+további parancsokat adhatunk a programnak, melyek az alábbiak\\
+ - move <x:num> <y:num>: Adott x és y koordinátákra mozog\\
+ - scale <w:num>: A vízszintes tengely hosszát állítja be\\
+ - dx <x:num>: az x tengelyen mozog\\
+ - dy <y:num>: az y tengelyen mozog\\
+ - save / out <fájl:file>: A függvény képét (txt formátumban) elmenti\\
+ - plot <polinom:expr>: Új grafikont ábrázol\\
+ - plot: A grafikon nézetre vált\\
+ - info: A grafikonról jelenít meg információkat\\

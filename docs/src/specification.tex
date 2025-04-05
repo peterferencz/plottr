@@ -1,0 +1,42 @@
+\documentclass[a4paper,12pt,twoside]{article}
+
+% Packages
+\usepackage[hungarian]{babel}  % Language
+\usepackage{t1enc}             %  | accented characters
+\usepackage{hyperref}       % Used for hyperlinks
+\usepackage[hmarginratio=1:1]{geometry}     % Set pages to actually be centered
+\usepackage{amsfonts}
+\usepackage{graphicx}       % Used for images
+\usepackage{fancyhdr}       % for headers
+
+
+\selectlanguage{hungarian}
+\graphicspath{ {./res/} }
+% \renewcommand{\familydefault}{\sfdefault}
+
+% Commands
+\newenvironment{smallpara}
+    {
+        \vspace{.5cm}
+    }
+    {
+        \vspace{.5cm}
+    }
+%
+
+\pagestyle{fancy}
+\lhead{ A programozás alapjai 2}
+% \chead{2. Gyakorlat}
+\rhead{Ferencz Péter}
+\rfoot{\today}
+
+% Document
+\begin{document}
+
+\input{./src/front.tex}
+
+\newpage
+
+\input{./src/userspec.tex}
+
+\end{document}
