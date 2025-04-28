@@ -4,16 +4,16 @@
 #include <string>
 
 #include "Command.hpp"
-#include "Plotter.hpp"
+#include "PlotterScreen.hpp"
 
 class OffsetCommand : public Command {
 private:
-    Plotter& plot;
+    PlotterScreen& plot;
 
 public:
-    OffsetCommand(Plotter& plotter) : Command("offset", 'o', 2), plot(plotter) {}
+    OffsetCommand(PlotterScreen& plotter) : Command("offset", 'o', 2), plot(plotter) {}
     ~OffsetCommand() {}
 
-    void exec(std::vector<std::string>& params);
+    void exec(const char* params[]);
     
 };

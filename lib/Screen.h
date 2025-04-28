@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Rect.h"
+
 class Screen {
 private:
     
@@ -10,7 +12,7 @@ public:
 
     // virtual void Show();
     // virtual void Hide();
-    virtual void Draw(int x, int y, int w, int h) const = 0;
+    virtual void Draw(Rect<int> consoleArea) const = 0;
 };
 
 

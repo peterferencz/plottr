@@ -28,6 +28,7 @@ project "Main"
     filter "configurations:Release"
         defines { "NDEBUG" }
         optimize "Full"
+        symbols "Off"
     
     filter "system:windows"
         defines { "WIN" }

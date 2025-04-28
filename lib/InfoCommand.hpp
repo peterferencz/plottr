@@ -5,7 +5,7 @@
 
 #include "Command.hpp"
 #include "InfoScreen.hpp"
-#include "UI.hpp"
+#include "Front.hpp"
 
 class InfoCommand : public Command {
 private:
@@ -16,5 +16,5 @@ public:
     InfoCommand(Front& ui, InfoScreen& info) : Command("info", 'i', 0), ui(ui), screen(info) {}
     ~InfoCommand() {}
 
-    void exec(std::vector<std::string>& params);
+    void exec(const char* params[]);
 };

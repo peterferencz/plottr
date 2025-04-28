@@ -1,25 +1,19 @@
-#pragma once 
-
-#include <cmath>
+#pragma once
 
 #include "Expression.hpp"
-#include "Console.hpp"
-#include "Screen.h"
+#include "Rect.h"
 
-class Plotter : public Screen {
-private:
+class Plotter {
+protected:
     Expression& exp;
-    //Offset from top-left of screen
-    double xOffset, yOffset;
-    double xWidth, yWidth;
+    const char* styleName;
 
 public:
-    Plotter(Expression& exp);
-    // ~Plotter();
+    Plotter(Expression& exp, const char* styleName)
+    : exp(exp), styleName(styleName) { }
+    virtual ~Plotter() = default;
 
-    void Move(double x, double y);
-    void Offset(double dx, double dy);
-    void Scale(double xw, double yw);
-    // void setExpression(Expression exp);
-    void Draw(int x, int y, int w, int h) const;
+    virtual const char* getStyleName() const { return styleName; }
+
+    virtual void Draw(Rect<int> consoleArea, Rect<double> worldArea) const = 0;
 };

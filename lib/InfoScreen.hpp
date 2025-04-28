@@ -4,6 +4,8 @@
 #include "Expression.hpp"
 #include "Console.hpp"
 
+#include <sstream>
+
 class InfoScreen : public Screen {
 private:
     Expression& exp;
@@ -16,5 +18,5 @@ public:
     // void Offset(double dx, double dy);
     // void Scale(double xw, double yw);
     // void setExpression(Expression exp);
-    void Draw(int x, int y, int w, int h) const;
+    void Draw(Rect<int> consoleArea) const;
 };

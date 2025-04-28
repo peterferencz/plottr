@@ -14,10 +14,19 @@ bool CommandManager::CaptureInput(Front ui){
     if(commandName == "exit" || commandName == "quit" || commandName == "q"){
         return false;
     }
+
+    const char* params[input.size()] = {nullptr};
+    for(size_t i = 1; i < input.size(); i++){
+        params[i-1] = input[i].c_str();
+    }
+    // params[input.size()] = nullptr;
     
-    for(auto cmd : commands){
+    for(Command* cmd : commands){
         if(cmd->getName() == commandName || cmd->getShortName() == commandName[0]){
-            cmd->exec(input);
+            
+            // Param
+            if(cmd->getParamCount() != input.size() -1 && cmd->getParamCount() != -1){ continue; }
+            cmd->exec(params);
             break;
         }
     }
@@ -49,8 +58,66 @@ std::vector<std::string> CommandManager::parseCommand(const std::string& line){
 }
 
 
+bool CommandManager::parseCLA(size_t argc, char** argv){
+    option* claOptions = new option[commands.size() + 1];
+    
+    // Reserve for short_name and the optional ':'
+    std::string argsString(commands.size() * 2, '\0');
+
+    //Constructing the required struct array for getopt_long_only
+    for(size_t i = 0; i < commands.size(); i++){
+        Command& cmd = *commands[i];
+        const bool has_args = cmd.getParamCount() != 0;
+        
+        claOptions[i] = (option) {
+            .name = cmd.getName(),
+            .has_arg = has_args ? required_argument : no_argument,
+            .flag = NULL,
+            .val = cmd.getShortName()
+        };
+
+        argsString += cmd.getShortName();
+        if(has_args){
+            argsString += ':';
+        }
+    }
+    claOptions[commands.size()] = {NULL, 0, NULL, '\0'};
+    
+    // Walking through argc using getopt_long
+    char ch = '\0';
+    while ((ch = getopt_long_only(argc, argv, argsString.c_str(), claOptions, NULL)) != -1){
+        bool foundCommand = false;
+
+        for(Command* cmd : commands){
+            if(cmd->getShortName() != ch){ continue; }
+            foundCommand = true;
+            
+            const char* params[cmd->getParamCount()] = {nullptr};
+            size_t i = 0;
+            params[i++] = optarg;
+
+            // Collect more space separated arguments
+            while (optind < argc && argv[optind][0] != '-'){
+                if(i == cmd->getParamCount()){ break; }
+                params[i++] = argv[optind++];
+            }
+
+            cmd->exec(params);
+            
+            break;
+        }
+        if(!foundCommand){
+            // Unkown command
+            return false;
+        }
+    }
+
+    delete[] claOptions;
+    return true;
+}
+
 CommandManager::~CommandManager() {
-    for(auto cmd : commands){
+    for(Command* cmd : commands){
         delete cmd;
     }
 }

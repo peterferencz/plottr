@@ -4,16 +4,16 @@
 #include <string>
 
 #include "Command.hpp"
-#include "Plotter.hpp"
+#include "PlotterScreen.hpp"
 
 class MoveCommand : public Command {
 private:
-    Plotter& plot;
+    PlotterScreen& plot;
 
 public:
-    MoveCommand(Plotter& plotter) : Command("move", 109, 2), plot(plotter) {}
+    MoveCommand(PlotterScreen& plotter) : Command("move", 'm', 2), plot(plotter) {}
     ~MoveCommand() {}
 
-    void exec(std::vector<std::string>& params);
+    void exec(const char* params[]);
     
 };

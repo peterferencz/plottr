@@ -5,16 +5,18 @@
 
 #include "Command.hpp"
 #include "InfoScreen.hpp"
-#include "UI.hpp"
+#include "Front.hpp"
 
 class PlotCommand : public Command {
 private:
     Front& ui;
-    Plotter& screen;
+    PlotterScreen& screen;
+    Expression& exp;
 
 public:
-    PlotCommand(Front& ui, Plotter& info) : Command("plot", 'p', 0), ui(ui), screen(info) {}
+    PlotCommand(Front& ui, PlotterScreen& info, Expression& exp)
+    : Command("plot", 'p', -1), ui(ui), screen(info), exp(exp) {}
     ~PlotCommand() {}
 
-    void exec(std::vector<std::string>& params);
+    void exec(const char* params[]);
 };

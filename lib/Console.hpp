@@ -5,6 +5,9 @@
 
 #include <ncurses.h>
 
+
+#include "Rect.h"
+
 // COlors ported from ncurses (ncurses.h:288) macro defintions
 enum CONSOLECOLOR {
     BLACK   =	0,
@@ -20,16 +23,23 @@ enum CONSOLECOLOR {
 class Console {
 private:
     static bool initialized;
+    static bool tui;
+    static Rect<size_t> noninteractiveConsoleSize;
 
 public:
     Console() = delete;
+    static void initNcurses();
 
 public:
     static void init();
     static void destroy();
+    static bool getTUI();
+    static void setTUI(bool tui);
 
     static int getHeight();
     static int getWidth();
+    static void setHeight(size_t h);    //Only in tui mode
+    static void setWidth(size_t w);     //Only in tui mode
 
     static std::string getInputOfLength(int l);
 

@@ -1,16 +1,21 @@
 #pragma once
 
 #include <vector>
+#include <array>
 #include <string>
 #include <istream>
+#include <unistd.h>
+#include <getopt.h>
+#include <cstring>
 
 #include "Command.hpp"
 #include "Console.hpp"
-#include "UI.hpp"
+#include "Front.hpp"
 
 class CommandManager {
 private:
-    std::vector<Command*> commands;
+    const std::vector<Command*> commands;
+
 
 public:
     CommandManager(std::initializer_list<Command*> commands) : commands(commands) {}
@@ -18,7 +23,7 @@ public:
 
     bool CaptureInput(Front ui);
 
-    //TODO parse cla here
+    bool parseCLA(size_t argc, char** argv);
 
 private:
     std::vector<std::string> parseCommand(const std::string& line);
