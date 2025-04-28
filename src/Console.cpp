@@ -6,12 +6,20 @@ bool Console::tui = false;
 Rect<size_t> Console::noninteractiveConsoleSize = {0, 0, 20, 10};
 
 void Console::init(){
+    if(initialized){ throw AlreadyInitializedConsoleException(); }
+    
+    initialized = true;
+
     if(tui){
         initNcurses();
     }
 }
 
 void Console::setTUI(bool tui){
+    //Prevent tui mode on cporta eval system
+    #if COPRTA
+        tui = false;
+    #endif
     Console::destroy();
     Console::tui = tui;
     Console::init();
@@ -21,10 +29,7 @@ bool Console::getTUI(){
     return tui;
 }
 
-void Console::initNcurses() {
-    initialized = true;
-    Console::tui = tui;
-    
+void Console::initNcurses() {    
     initscr();
     keypad(stdscr, TRUE);
     setlocale(LC_ALL, "");
@@ -56,22 +61,28 @@ void Console::initNcurses() {
 }
 
 void Console::destroy() {
-//TODO chekck initialized
-    initialized = false;
+    if(!initialized){ throw UnInitializedConsoleException(); }
+    
 
     Console::Clear();
     if(tui){
         endwin();
     }
+    
+    initialized = false;
 }
 
 void Console::flush() {
+    if(!initialized){ throw UnInitializedConsoleException(); }
+
     if(tui){
         refresh();
     }
 }
 
 void Console::setColor(CONSOLECOLOR color) {
+    if(!initialized){ throw UnInitializedConsoleException(); }
+
     if(tui){
         if(!has_colors()) {return; } //Terminal doesn't support colors
 
@@ -80,12 +91,16 @@ void Console::setColor(CONSOLECOLOR color) {
 }
 
 void Console::moveCursor(int x, int y){
+    if(!initialized){ throw UnInitializedConsoleException(); }
+
     if(tui){
         move(y, x);
     }
 }
 
 void Console::Print(int x, int y, const wchar_t* str) {
+    if(!initialized){ throw UnInitializedConsoleException(); }
+
     if(tui){
         mvaddwstr(y, x, str);
     }else{
@@ -93,6 +108,8 @@ void Console::Print(int x, int y, const wchar_t* str) {
     }
 }
 void Console::Print(int x, int y, const char* str) {
+    if(!initialized){ throw UnInitializedConsoleException(); }
+
     if(tui){
         mvaddstr(y, x, str);
     }else{
@@ -101,6 +118,8 @@ void Console::Print(int x, int y, const char* str) {
 }
 
 std::string Console::getInputOfLength(int l){
+    if(!initialized){ throw UnInitializedConsoleException(); }
+
     if(tui){
         char* input = new char[l];
         getnstr(input, l);
@@ -116,12 +135,16 @@ std::string Console::getInputOfLength(int l){
 }
 
 void Console::Clear() {
+    if(!initialized){ throw UnInitializedConsoleException(); }
+
     if(tui){
         clear();
     }
 }
 
 void Console::Clear(int x, int y, int w, int h){
+    if(!initialized){ throw UnInitializedConsoleException(); }
+
     if(tui){
         std::string clr(w, ' ');
         for(int _y = y; _y < y + h; _y++){

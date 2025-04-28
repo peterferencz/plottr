@@ -1,3 +1,7 @@
+#ifdef MEMTRACE
+#include "memtrace.h"
+#endif
+
 #include <iostream>
 #include <getopt.h>
 
@@ -13,6 +17,8 @@
 #include "StyleCommand.hpp"
 #include "tuiCommand.hpp"
 #include "Scalecommand.hpp"
+
+
 
 int main(int argc, char** argv){
     Console::init();

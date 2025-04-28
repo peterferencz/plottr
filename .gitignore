@@ -10,6 +10,7 @@ obj/
 
 # Documentation
 docs/working
+docs/res/uml
 
 # VS code files
 .vscode/

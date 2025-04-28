@@ -13,22 +13,26 @@ A programot az alábbi sematika szerint kell futtatni:
 \begin{verbatim}
     plottr [kapcsolók] <függvény>
 \end{verbatim}
-A kapcsolókat tetszőleges sorrendben, opcionálisan megadhatók:\\
- - interactive: a felhasználó egy interaktív tui felületen kezelheti a programot\\
- - offset <x:num> <y:num>: Az origótól való x és y eltolás\\
- - o / out <fájl:file>: A függvény képének (txt formátumban ) mentési helye.
-        Ha nincs megadva, akkor a standard kimenetre ír\\
- - s / scale <width:num>: A vízszintes tengely szélessége\\
- - h / help: A program futtatását kiíró kapcsoló\\
+A kapcsolókat tetszőleges sorrendben, opcionálisan megadhatók.
 
-\subsection{Interaktív mód parancsai}
-Ha a programot az -interactive kapcsolóval indítjuk el, akkor futás közben
-további parancsokat adhatunk a programnak, melyek az alábbiak\\
- - move <x:num> <y:num>: Adott x és y koordinátákra mozog\\
- - scale <w:num>: A vízszintes tengely hosszát állítja be\\
- - dx <x:num>: az x tengelyen mozog\\
- - dy <y:num>: az y tengelyen mozog\\
- - save / out <fájl:file>: A függvény képét (txt formátumban) elmenti\\
- - plot <polinom:expr>: Új grafikont ábrázol\\
- - plot: A grafikon nézetre vált\\
- - info: A grafikonról jelenít meg információkat\\
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|}
+Név & Flag & Rövidítés & Magyarázat \\
+\hline
+Interaktív mód & --tui & -t & Interaktív módba állítja a programot \\
+Mozgatás & --move <x:num> <y:num> & -m & Adott x, y koordinátákra mozgatja a nézetet \\
+Elmozdulás & --offset <x:num> <y:num> & -o & A jelenlegi nézettől mérten relatívan mozog \\
+Méretarány & --scale <w:num> <h:num> & -s & A kijelző szélességét és magasságát adjuk meg \\
+Információ kijelző & --info & -i & A függvényről jelenít meg információkat \\
+Függvény megadása & --plot <exp...:number> & -p & A függvény eggyütthatóit lehet beállítani \\
+Stílusok & --style <basic|ascii|unicode> & -s & A függvény megjelenítését állíthatjuk \\
+Mentés & --out <f:file> & -o & Kimenti a függvényt fájlba \\
+Segítség & --help & -h & A program használatáról ír ki információkat \\
+\end{tabular}
+}%
+\caption{A program által elfogadott kapcsolók}
+\label{tab:student_scores}
+\end{table}
+

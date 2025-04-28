@@ -5,7 +5,6 @@
 
 #include <ncurses.h>
 
-
 #include "Rect.h"
 
 // COlors ported from ncurses (ncurses.h:288) macro defintions
@@ -20,6 +19,9 @@ enum CONSOLECOLOR {
     WHITE   =	7
 };
 
+class UnInitializedConsoleException : public std::exception{ };
+class AlreadyInitializedConsoleException : public std::exception{ };
+
 class Console {
 private:
     static bool initialized;
@@ -27,7 +29,10 @@ private:
     static Rect<size_t> noninteractiveConsoleSize;
 
 public:
+// Thank you memtrace.h, for having a delete macro -_-
+#ifndef MEMTRACE
     Console() = delete;
+#endif
     static void initNcurses();
 
 public:

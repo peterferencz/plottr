@@ -1,0 +1,22 @@
+@startuml Plotting
+
+abstract Plotter {
+    -Expression& exp
+    +Plotter(Expression& exp)
+    +virtual void Draw(int x, int y, int w, int h) const
+}
+class SimplePlotter {
+
+}
+class ASCIIPlotter {
+
+}
+class UnicodePlotter {
+
+}
+
+Plotter <|-- SimplePlotter
+Plotter <|-- ASCIIPlotter
+Plotter <|-- UnicodePlotter
+
+@enduml

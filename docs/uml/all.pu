@@ -1,0 +1,44 @@
+@startuml PlottR
+
+!include console.pu
+
+package Commands <<Rectangle>> {
+    !include command.pu
+}
+
+
+package Screens <<Rectangle>> {
+!include screen.pu
+
+package Plotting <<Rectangle>> {
+!include plotter.pu
+
+}
+
+PlotterScreen *-- Plotter
+
+
+}
+
+
+class Expression {
+    - std::vector<double> coefficients
+    + Expression()
+    + Expression(std::vector<double> coefficients)
+}
+
+
+
+entity main {
+    +int main(int argc, char** argv)
+}
+note top of main
+Entry point of our program
+end note
+
+main *-- CommandManager
+main *-- Front
+main *-- Expression
+main .. Console
+
+@enduml

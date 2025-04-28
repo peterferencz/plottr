@@ -3,7 +3,8 @@
 \subsection{A Console statikus osztály}
 A \textit{Console} osztály fő feladata az interaktív módban történő felhasználói
 bemenet és kimenet kezelére szolgáló \textit{ncurses} könyvtárral való kommunikáció
-lebonyolítására szolgáló statikus osztály.
+lebonyolítása. Ez egy statikus osztály, melyet \textit{init} és \textit{destroy}
+függvényekkel kell inicializálni és dekonstruálni a program végén.
 
 \begin{center}
     \makebox[\textwidth]{\includegraphics[height=15cm]{uml/Console.png}}

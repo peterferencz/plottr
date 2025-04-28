@@ -1,0 +1,61 @@
+@startuml Command
+
+class CommandManager {
+    - std::vector<Command*> commands
+
+    + CommandManager(std::initializer_list<Command*> commands)
+    + ~CommandManager()
+    + bool CaptureInput(Front ui)
+}
+CommandManager *-- Command
+
+abstract class Command {
+    - const char* name
+    - const char shortName
+    - const int paramCount
+
+    + Command(const char* name, const char shortName, const int paramCount)
+    + virtual ~Command()
+
+    + virtual const char* getName() const
+    + virtual const char getShortName() const
+
+    + virtual void exec(std::vector<std::string>& params)
+}
+
+class MoveCommand {
+    + MoveCommand(Plotter& plotter)
+    + void exec(std::vector<std::string>& params)
+}
+
+class InfoCommand {
+    - Front& ui
+    - InfoScreen& screen
+
+    + InfoCommand(Front& ui, InfoScreen& info)
+    + void exec(std::vector<std::string>& params)
+}
+
+class PlotCommand {
+    -Front& ui
+    -Plotter& screen
+
+    +PlotCommand(Front& ui, Plotter& info)
+    +~PlotCommand()
+    +void exec(std::vector<std::string>& params)
+}
+
+class OffsetCommand {
+    -Plotter& plot
+
+    +OffsetCommand(Plotter& plotter)
+    +~OffsetCommand() {}
+    +void exec(std::vector<std::string>& params)
+}
+
+Command <|-down- MoveCommand
+Command <|-down- PlotCommand
+Command <|-down- InfoCommand
+Command <|-down- OffsetCommand
+
+@enduml
