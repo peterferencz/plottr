@@ -18,5 +18,5 @@ public:
     : Command("plot", 'p', -1), ui(ui), screen(info), exp(exp) {}
     ~PlotCommand() {}
 
-    void exec(const char* params[]);
+    void exec(const std::vector<std::string>& params);
 };

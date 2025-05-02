@@ -3,6 +3,8 @@
 
 bool Console::initialized = false;
 bool Console::tui = false;
+std::ostream* Console::out = &std::cout;
+
 Rect<size_t> Console::noninteractiveConsoleSize = {0, 0, 20, 10};
 
 void Console::init(){
@@ -17,8 +19,10 @@ void Console::init(){
 
 void Console::setTUI(bool tui){
     //Prevent tui mode on cporta eval system
-    #if COPRTA
-        tui = false;
+    #ifdef CPORTA
+        if(tui == true){
+            throw NonInteractiveEnvironmentConsoleException();
+        }
     #endif
     Console::destroy();
     Console::tui = tui;
@@ -31,12 +35,11 @@ bool Console::getTUI(){
 
 void Console::initNcurses() {    
     initscr();
-    keypad(stdscr, TRUE);
+    keypad(stdscr, true);
     setlocale(LC_ALL, "");
     cbreak();
     echo();
-    // noecho();
-    // curs_set(0);
+
 
 
     if(has_colors()){
@@ -68,7 +71,7 @@ void Console::destroy() {
     if(tui){
         endwin();
     }
-    
+
     initialized = false;
 }
 
@@ -104,7 +107,7 @@ void Console::Print(int x, int y, const wchar_t* str) {
     if(tui){
         mvaddwstr(y, x, str);
     }else{
-        std::cout << str << std::endl;
+        *out << str << std::endl;
     }
 }
 void Console::Print(int x, int y, const char* str) {
@@ -112,9 +115,14 @@ void Console::Print(int x, int y, const char* str) {
 
     if(tui){
         mvaddstr(y, x, str);
+
     }else{
-        std::cout << str << std::endl;
+        *out << str << std::endl;
     }
+}
+
+void Console::RedirectOutput(std::ostream& newOut){
+    out = &newOut;
 }
 
 std::string Console::getInputOfLength(int l){
@@ -156,14 +164,20 @@ void Console::Clear(int x, int y, int w, int h){
 
 int Console::getHeight() {
     if(tui){
-        return LINES;
+        #ifndef CPORTA
+            return LINES;
+        #endif
+        return 0;
     }else{
         return noninteractiveConsoleSize.h;
     }
 }
 int Console::getWidth() {
     if(tui){
-        return COLS;
+        #ifndef CPORTA
+            return COLS;
+        #endif
+        return 0;
     }else{
         return noninteractiveConsoleSize.w;
     }

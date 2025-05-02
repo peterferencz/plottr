@@ -1,6 +1,6 @@
 .PHONY: docs
 .DEFAULT: docs
-docs: ./src/specification.tex
+docs: ./src/specification.tex uml
 	mkdir -p ./working
 	pdflatex -halt-on-error -output-directory=./working ./src/specification.tex
 

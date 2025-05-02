@@ -14,6 +14,6 @@ public:
     OffsetCommand(PlotterScreen& plotter) : Command("offset", 'o', 2), plot(plotter) {}
     ~OffsetCommand() {}
 
-    void exec(const char* params[]);
+    void exec(const std::vector<std::string>& params);
     
 };

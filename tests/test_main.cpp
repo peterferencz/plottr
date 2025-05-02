@@ -8,4 +8,6 @@ int main(void) {
     std::cout << "==== Starting tests for PlottR ====" << std::endl;
 
     testConsole();
+
+    return 0;
 }

@@ -17,6 +17,7 @@
 #include "StyleCommand.hpp"
 #include "tuiCommand.hpp"
 #include "Scalecommand.hpp"
+#include "OutCommand.hpp"
 
 
 
@@ -43,14 +44,15 @@ int main(int argc, char** argv){
         new TUICommand(),
         new MoveCommand(plotterScreen),
         new OffsetCommand(plotterScreen),
+        new ScaleCommand(plotterScreen),
         new InfoCommand(ui, infoScreen),
         new PlotCommand(ui, plotterScreen, expression),
-        new ScaleCommand(plotterScreen),
         new StyleCommand(plotterScreen, {
             basicPlotter,
             new ASCIIPlotter(expression),
             new UnicodePlotter(expression)
-        })
+        }),
+        new OutCommand(plotterScreen)
     };
 
     // Parse Command line arguments

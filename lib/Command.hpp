@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <string_view>
 
 class Command {
 private:
@@ -18,11 +19,10 @@ public:
     virtual ~Command() = default;
 
     virtual const char* getName() const { return name; }
-    virtual const char getShortName() const { return shortName; }
-    virtual const int getParamCount() const { return paramCount; }
+    virtual char getShortName() const { return shortName; }
+    virtual int getParamCount() const { return paramCount; }
 
-    //TODO make const
-    virtual void exec(const char* params[]) = 0;
+    virtual void exec(const std::vector<std::string>& params) = 0;
 };
 
 

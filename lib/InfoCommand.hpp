@@ -16,5 +16,5 @@ public:
     InfoCommand(Front& ui, InfoScreen& info) : Command("info", 'i', 0), ui(ui), screen(info) {}
     ~InfoCommand() {}
 
-    void exec(const char* params[]);
+    void exec(const std::vector<std::string>& params);
 };

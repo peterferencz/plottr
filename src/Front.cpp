@@ -32,7 +32,7 @@ if(Console::getTUI()){
     // Draw: Subtract frame + input box
     currentDisplay->Draw({1, 1, W-3, H-4});
 }else{
-    currentDisplay->Draw({1, 1, W, H});
+    currentDisplay->Draw({0, 0, W, H});
 }
 
 

@@ -1,9 +1,31 @@
-workspace "PlottrWS"
+local Name = "PlottR"
+local buildDirectory = "build"
+
+workspace(Name.."_ws")
     configurations { "Debug", "Release", "Jporta" }
+    cppdialect "C++17"
+
+    --------------------------- System : Windows -------------------------------
+    filter "system:windows"
+        defines { "WIN" }
+    ---------------------------- System : Linux --------------------------------
+    filter "system:linux"
+        defines { "UNIX" }
+    ---------------------------- Config : Debug --------------------------------
+    filter "configurations:Debug"
+        defines { "DEBUG" }
+        optimize "Off"
+        symbols "On"
+    --------------------------- Config : Release -------------------------------
+    filter "configurations:Release"
+        defines { "NDEBUG" }
+        optimize "Full"
+        symbols "Off"
     
-project "Plottr"
+project(Name)
     kind "ConsoleApp"
     language "C++"
+    location(buildDirectory)
 
 
     files {
@@ -13,54 +35,33 @@ project "Plottr"
         "src/**.cpp"
     }
     includedirs "lib"
-
-    entrypoint "huh"
    
-    targetdir "bin/%{cfg.buildcfg}"
-    targetname "Plottr"
+    targetdir(buildDirectory.."/bin/%{cfg.buildcfg}")
+    targetname "%{cfg.project.name}"
 
     linkoptions {
         "-lncursesw"      -- Link ncurses (wide character) library
     }
 
-
--------------------------------- Config : Debug --------------------------------
-    filter "configurations:Debug"
-        defines { "DEBUG" }
-        optimize "Off"
-        symbols "On"
-
-------------------------------- Config : Release -------------------------------
-    filter "configurations:Release"
-        defines { "NDEBUG" }
-        optimize "Full"
-        symbols "Off"
-
-------------------------------- Config : Jporta --------------------------------
+    --------------------------- Config : Jporta --------------------------------
     filter "configurations:Jporta"
-        defines { "DEBUG", "MEMTRACE" }
+        defines { "DEBUG", "MEMTRACE", "JPORTA", "CPORTA" }
         optimize "Off"
         symbols "On"
         buildoptions {
 	    	"-Wall", "-Wextra", "-Wpedantic"
 	    }
-        -- entrypoint "test"
-        -- linkoptions { "/ENTRY:test" }
-
-------------------------------- System : Windows -------------------------------
-    filter "system:windows"
-        defines { "WIN" }
--------------------------------- System : Linux --------------------------------
-    filter "system:linux"
-        defines { "UNIX" }
+        linkoptions {} -- Remowe ncurses link
 
 
 
 
-project "PlottrTest"
+project(Name.."Test")
     kind "ConsoleApp"
-    -- location "tests"
-    targetname "PlottrTest"
+    
+    targetname("%{cfg.project.name}")
+    targetdir(buildDirectory.."/bin/%{cfg.buildcfg}")
+    location(buildDirectory)
 
     files {
         "tests/**.cpp",

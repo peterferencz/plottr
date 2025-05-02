@@ -9,26 +9,20 @@ bool CommandManager::CaptureInput(Front ui){
     if(input.size() == 0){
         return true; 
     }
-    string& commandName = input[0];
+    string commandName(input[0]);
+    input.erase(input.begin()); // Remove first element
     
     if(commandName == "exit" || commandName == "quit" || commandName == "q"){
         return false;
     }
-
-    const char* params[input.size()] = {nullptr};
-    for(size_t i = 1; i < input.size(); i++){
-        params[i-1] = input[i].c_str();
-    }
-    // params[input.size()] = nullptr;
     
     for(Command* cmd : commands){
-        if(cmd->getName() == commandName || cmd->getShortName() == commandName[0]){
+        if(cmd->getName() != commandName && cmd->getShortName() != commandName[0]){ continue; }
+        // Parameter count doesn't match
+        if((size_t)cmd->getParamCount() != input.size() && cmd->getParamCount() != -1){ continue; }
             
-            // Param
-            if(cmd->getParamCount() != input.size() -1 && cmd->getParamCount() != -1){ continue; }
-            cmd->exec(params);
-            break;
-        }
+        cmd->exec(input);
+        break;
     }
 
     return true;
@@ -69,12 +63,10 @@ bool CommandManager::parseCLA(size_t argc, char** argv){
         Command& cmd = *commands[i];
         const bool has_args = cmd.getParamCount() != 0;
         
-        claOptions[i] = (option) {
-            .name = cmd.getName(),
-            .has_arg = has_args ? required_argument : no_argument,
-            .flag = NULL,
-            .val = cmd.getShortName()
-        };
+        claOptions[i].name = cmd.getName();
+        claOptions[i].has_arg = has_args ? required_argument : no_argument;
+        claOptions[i].flag = NULL;
+        claOptions[i].val = cmd.getShortName();
 
         argsString += cmd.getShortName();
         if(has_args){
@@ -92,14 +84,17 @@ bool CommandManager::parseCLA(size_t argc, char** argv){
             if(cmd->getShortName() != ch){ continue; }
             foundCommand = true;
             
-            const char* params[cmd->getParamCount()] = {nullptr};
+            // const char** params = new const char*[cmd->getParamCount()];
+            std::vector<std::string> params;
+            params.reserve(cmd->getParamCount());
+
             size_t i = 0;
             params[i++] = optarg;
 
             // Collect more space separated arguments
-            while (optind < argc && argv[optind][0] != '-'){
-                if(i == cmd->getParamCount()){ break; }
-                params[i++] = argv[optind++];
+            while ((size_t)optind < argc && argv[optind][0] != '-'){
+                if(i == (size_t)cmd->getParamCount()){ break; }
+                params.emplace_back(argv[optind++]);
             }
 
             cmd->exec(params);

@@ -7,8 +7,8 @@ void ASCIIPlotter::Draw(Rect<int> consoleArea, Rect<double> worldArea) const{
 
     Console::setColor(CYAN);
 
-    double xSteps = worldArea.w / consoleArea.w;
-    double ySteps = worldArea.h / consoleArea.h;
+    // double xSteps = worldArea.w / consoleArea.w;
+    // double ySteps = worldArea.h / consoleArea.h;
     
     for(int sx = consoleArea.x; sx <= consoleArea.x + consoleArea.w; sx ++) {
         

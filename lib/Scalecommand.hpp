@@ -11,6 +11,6 @@ public:
     ScaleCommand(PlotterScreen& plotter) : Command("scale", 's', 2), plot(plotter) {}
     ~ScaleCommand() {}
 
-    void exec(const char* params[]);
+    void exec(const std::vector<std::string>& params);
     
 };

@@ -2,11 +2,13 @@
 
 #include <string>
 #include <iostream>
+#include <exception>
 
+
+#ifdef CPORTA
+#include "NcursesJportaCompatibility.h"
+#else
 #include <ncurses.h>
-
-#include "Rect.h"
-
 // COlors ported from ncurses (ncurses.h:288) macro defintions
 enum CONSOLECOLOR {
     BLACK   =	0,
@@ -18,6 +20,9 @@ enum CONSOLECOLOR {
     CYAN    =	6,
     WHITE   =	7
 };
+#endif
+
+#include "Rect.h"
 
 class UnInitializedConsoleException : public std::exception{ };
 class AlreadyInitializedConsoleException : public std::exception{ };
@@ -27,6 +32,7 @@ private:
     static bool initialized;
     static bool tui;
     static Rect<size_t> noninteractiveConsoleSize;
+    static std::ostream* out;
 
 public:
 // Thank you memtrace.h, for having a delete macro -_-
@@ -43,8 +49,8 @@ public:
 
     static int getHeight();
     static int getWidth();
-    static void setHeight(size_t h);    //Only in tui mode
-    static void setWidth(size_t w);     //Only in tui mode
+    static void setHeight(size_t h);    //Only in non tui mode
+    static void setWidth(size_t w);     //Only in non tui mode
 
     static std::string getInputOfLength(int l);
 
@@ -52,6 +58,8 @@ public:
 
     static void Print(int x, int y, const wchar_t* str);
     static void Print(int x, int y, const char* str);
+
+    static void RedirectOutput(std::ostream& newOut);
 
     static void setColor(CONSOLECOLOR color = WHITE);
 

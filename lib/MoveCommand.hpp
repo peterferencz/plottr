@@ -14,6 +14,6 @@ public:
     MoveCommand(PlotterScreen& plotter) : Command("move", 'm', 2), plot(plotter) {}
     ~MoveCommand() {}
 
-    void exec(const char* params[]);
+    void exec(const std::vector<std::string>& params);
     
 };

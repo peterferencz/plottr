@@ -18,7 +18,7 @@ private:
 
 
 public:
-    CommandManager(std::initializer_list<Command*> commands) : commands(commands) {}
+    CommandManager(const std::initializer_list<Command*>& commands) : commands(commands) {}
     ~CommandManager();
 
     bool CaptureInput(Front ui);

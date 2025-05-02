@@ -1,0 +1,24 @@
+# Doxyfile configuration
+
+# Enable Graphviz (required for UML diagrams)
+HAVE_DOT = YES
+
+# Output format for images
+DOT_IMAGE_FORMAT = png  # or pdf, svg
+
+# Enable class diagram generation
+CLASS_DIAGRAMS = YES
+
+# Where the UML diagrams will be placed
+OUTPUT_DIRECTORY = ./build/uml
+
+# Whether to extract all the documentation from your code (optional)
+EXTRACT_ALL = YES
+
+# Include private and protected members in the diagrams (optional)
+EXTRACT_PRIVATE = YES
+EXTRACT_PROTECTED = YES
+
+# Other settings (optional)
+INPUT = ./src  # Set your source code directory
+FILE_PATTERNS = *.cpp *.h *.c *.hpp  # Specify which files to scan

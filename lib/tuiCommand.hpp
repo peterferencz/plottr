@@ -7,5 +7,5 @@ public:
     TUICommand() : Command("tui", 't', 0) {}
     ~TUICommand() {}
 
-    void exec(const char* params[]);
+    void exec(const std::vector<std::string>& params);
 };
