@@ -52,3 +52,7 @@ std::string Front::getInput(){
 void Front::setScreen(Screen& screen){
     currentDisplay = &screen;
 }
+
+Screen& Front::getScreen() const{
+    return *currentDisplay;
+}

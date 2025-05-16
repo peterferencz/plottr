@@ -16,13 +16,18 @@ bool CommandManager::CaptureInput(Front ui){
         return false;
     }
     
+    bool foundCommand = false;
     for(Command* cmd : commands){
         if(cmd->getName() != commandName && cmd->getShortName() != commandName[0]){ continue; }
         // Parameter count doesn't match
         if((size_t)cmd->getParamCount() != input.size() && cmd->getParamCount() != -1){ continue; }
             
         cmd->exec(input);
+        foundCommand = true;
         break;
+    }
+    if(!foundCommand){
+        throw UnknownCommandException();
     }
 
     return true;
@@ -52,7 +57,7 @@ std::vector<std::string> CommandManager::parseCommand(const std::string& line){
 }
 
 
-bool CommandManager::parseCLA(size_t argc, char** argv){
+void CommandManager::parseCLA(size_t argc, char** argv){
     option* claOptions = new option[commands.size() + 1];
     
     // Reserve for short_name and the optional ':'
@@ -102,13 +107,11 @@ bool CommandManager::parseCLA(size_t argc, char** argv){
             break;
         }
         if(!foundCommand){
-            // Unkown command
-            return false;
+            throw UnknownCommandException();
         }
     }
 
     delete[] claOptions;
-    return true;
 }
 
 CommandManager::~CommandManager() {

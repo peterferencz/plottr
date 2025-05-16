@@ -1,24 +1,71 @@
 # Doxyfile configuration
+GENERATE_LATEX          = YES
+GENERATE_HTML           = NO
+GENERATE_RTF            = NO
+GENERATE_MAN            = NO
+GENERATE_XML            = NO
+GENERATE_DOCBOOK        = NO
+GENERATE_AUTOGEN_DEF    = NO
+
 
 # Enable Graphviz (required for UML diagrams)
 HAVE_DOT = YES
-
-# Output format for images
 DOT_IMAGE_FORMAT = png  # or pdf, svg
 
+OUTPUT_LANGUAGE        = Hungarian
+
+QUIET = YES
+WARNINGS = NO
+
+LATEX_HEADER = ../docs/header.tex
+LATEX_FOOTER = ../docs/footer.tex
+LATEX_EXTRA_FILES = ../docs/front.tex ../docs/userspec.tex ../docs/devspec.tex ../docs/res/BMEKicsi.png ../docs/res/VIK.png
+
 # Enable class diagram generation
-CLASS_DIAGRAMS = YES
+CLASS_DIAGRAMS = NO
+CLASS_GRAPH = NO
+COLLABORATION_GRAPH = NO
+
+UML_LOOK             = YES
+UML_LIMIT_NUM_FIELDS = 50
+TEMPLATE_RELATIONS   = YES
+
+HIDE_UNDOC_RELATIONS = NO
 
 # Where the UML diagrams will be placed
-OUTPUT_DIRECTORY = ./build/uml
+OUTPUT_DIRECTORY = ./docs
+LATEX_OUTPUT = .
 
 # Whether to extract all the documentation from your code (optional)
-EXTRACT_ALL = YES
+# EXTRACT_ALL = YES
 
-# Include private and protected members in the diagrams (optional)
-EXTRACT_PRIVATE = YES
-EXTRACT_PROTECTED = YES
+SHOW_FILES = NO
+SHOW_USED_FILES = NO
+
+
+EXTRACT_PRIVATE     = YES
+EXTRACT_STATIC      = YES
+EXTRACT_LOCAL_CLASSES = YES
+EXTRACT_ANON_NSPACES = NO
+EXTRACT_PRIV_VIRTUAL = YES
+
+FULL_MEMBER_DOC = NO
+
+ENABLE_PREPROCESSING    = YES
+MACRO_EXPANSION         = YES
+EXPAND_ONLY_PREDEF      = NO
+
+GENERATE_TREEVIEW = NO
+LATEX_HIDE_INDICES = YES
+
 
 # Other settings (optional)
-INPUT = ./src  # Set your source code directory
+INPUT = ../src ../lib # Set your source code directory
 FILE_PATTERNS = *.cpp *.h *.c *.hpp  # Specify which files to scan
+# Remove memtrace and gtest_lite
+EXCLUDE = ../src/memtrace.cpp ../lib/memtrace.h ../lib/gtest_lite.h
+
+# https://stackoverflow.com/a/38322858
+# DOT_GRAPH_MAX_NODES  = 100
+# MAX_DOT_GRAPH_DEPTH  = 0
+# DOT_TRANSPARENT      = YES

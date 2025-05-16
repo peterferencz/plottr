@@ -8,6 +8,14 @@ PlotterScreen::PlotterScreen(Expression& exp, Plotter* plotter)
     // Offset(- w / 2, - h / 2);
 }
 
+Rect<double> PlotterScreen::getWorldArea() const {
+    return worldArea;
+}
+
+const Plotter* PlotterScreen::getPlotter() const {
+    return plotter;
+}
+
 void PlotterScreen::Draw(Rect<int> consoleArea) const {
     plotter->Draw(consoleArea, worldArea);
 

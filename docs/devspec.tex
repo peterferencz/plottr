@@ -1,0 +1,61 @@
+\chapter{Fejlesztői dokumentáció}
+\doxysection{A Console statikus osztály}
+
+A \textit{Console} osztály fő feladata az interaktív módban történő felhasználói
+bemenet és kimenet kezelére szolgáló \textit{ncurses} könyvtárral való kommunikáció
+lebonyolítására szolgáló statikus osztály.
+Ezt az osztályt az \textit{init} és a \textit{destroy} függvényekkel kell
+inicializálni és dekonstruálni a program végén.
+
+% \begin{center}
+%     \makebox[\textwidth]{\includegraphics[height=15cm]{uml/Console.png}}
+% \end{center}
+
+\doxysection{A Command osztálycsoport}
+Az interaktív mód során kapott parancsokat és parancssori futtatás által adott
+kapcsolókat a \textit{ConsoleManager} osztály kezeli, amely a konstruktorában
+kapott \textit{Command} absztrak osztály leszármazottait tartalmazza és
+hívja meg azok \textit{exec} függvényeit a megadott paraméterekkel.
+
+% \begin{center}
+%     \makebox[\textwidth]{\includegraphics[height=7cm]{uml/Command.png}}
+% \end{center}
+
+\doxysection{A Screen osztálycsoport}
+Az interaktív mód során kapott parancsokat a program a \textit{Front} oszály fogja
+megkapni, mely a különböző \textit{Screen}-ek váltogatását kezeli.
+
+% \begin{center}
+%     \makebox[\textwidth]{\includegraphics[height=7cm]{uml/Screens.png}}
+% \end{center}
+
+\doxysection{A grafikonok kirajzolása}
+A grafikonok kirajzolását a \textit{Plotter} osztály leszármazottjai teszik,
+akik különböző módon ábrázolnak:\\
+\textbf{SimplePlotter}: Ez az osztály a képernyő minden helyéhez hozzárendel egy,
+a függvénynek megfelelt y értéket.\\
+\textbf{ASCIIPlotter}: A grafikon kirajzolása csak ASCII karakterekkel történik,
+ezen felül pontok helyett vonalakkal dolgozik.\\
+\textbf{UnicodePlotter}: A grafikon kirajzolása Unicode karakterekkel történik,
+szintén vonalakkal dolgozik\\
+
+% \begin{center}
+%     \makebox[\textwidth]{\includegraphics[height=5cm]{uml/Plotting.png}}
+% \end{center}
+
+% \doxysection{Az egész program}
+% \begin{center}
+%     \makebox[\textwidth]{\includegraphics[height=9cm]{uml/PlottR.png}}
+% \end{center}
+
+\doxysection{A program fejlesztéséhez használt más programok}
+\begin{itemize}
+    \item Projektgenerátor: \href{https://premake.github.io/}{premake5}
+    \item Cpp fordító: \href{https://gcc.gnu.org/}{GNU Compiler Collection (g++)}
+    \item Fordítás: \href{https://www.gnu.org/software/make/}{GNU Make}
+    \item Dokumentáció: \href{https://www.doxygen.nl/}{Doxygen}
+    \item Verziókövetés: \href{https://git-scm.com/}{Git} és \href{https://github.com/}{Github}
+\end{itemize}
+A programot helyes működésének elérése érdekében folyamatos, fejlesztés közbeni
+manuális teszteket, ezen felül a \textit{gtest lite} tesztkönyvtárat,
+és a \textit{memtrace} memóriaszivárgás-ellenőrző programot alkalmazzuk.

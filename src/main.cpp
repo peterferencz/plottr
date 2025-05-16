@@ -1,12 +1,9 @@
-#ifdef MEMTRACE
-#include "memtrace.h"
-#endif
-
 #include <iostream>
 #include <getopt.h>
 
 #include "Console.hpp"
 #include "Front.hpp"
+#include "memtrace.h"
 #include "CommandManager.hpp"
 #include "PlotterScreen.hpp"
 #include "InfoScreen.hpp"
@@ -18,8 +15,6 @@
 #include "tuiCommand.hpp"
 #include "Scalecommand.hpp"
 #include "OutCommand.hpp"
-
-
 
 int main(int argc, char** argv){
     Console::init();
@@ -56,15 +51,23 @@ int main(int argc, char** argv){
     };
 
     // Parse Command line arguments
-    if(!manager.parseCLA(argc, argv)){
+    try{
+        manager.parseCLA(argc, argv);
+    }catch(const UnknownCommandException&){
         Console::Print(0,0, "Invalid command line arguments (ignoring)!");
     }
     
 
     //Draw ui while we don't quit through exit command
-    do {
+    while(true){
+        try{
+            if(!manager.CaptureInput(ui)){ break; }
+        } catch (const UnknownCommandException&){
+            //TODO notify user
+        }
+
         ui.Draw();
-    }  while(manager.CaptureInput(ui));
+    }
 
     Console::destroy();
 

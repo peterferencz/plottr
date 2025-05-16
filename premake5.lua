@@ -58,7 +58,7 @@ project(Name)
 
 project(Name.."Test")
     kind "ConsoleApp"
-    
+
     targetname("%{cfg.project.name}")
     targetdir(buildDirectory.."/bin/%{cfg.buildcfg}")
     location(buildDirectory)
@@ -81,4 +81,17 @@ project(Name.."Test")
     includedirs {
         "src",
         "lib"
+    }
+
+project("Docs")
+    kind "Makefile"
+    location(buildDirectory)
+
+    buildcommands {
+        "doxygen ../Doxyfile",
+        "make -C ../"..buildDirectory.."/docs pdf"
+    }
+  
+    cleancommands {
+        "make -C "..buildDirectory.."/docs clean"
     }

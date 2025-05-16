@@ -1,6 +1,7 @@
 #pragma once
 
 // This file is solely for the Jporta system, so it compiles.
+// It contains all used ncurses functions.
 
 typedef struct _win_st WINDOW;
 typedef short NCURSES_PAIRS_T;

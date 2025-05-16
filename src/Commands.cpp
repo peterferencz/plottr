@@ -7,7 +7,8 @@
 #include "Scalecommand.hpp"
 #include "OutCommand.hpp"
 
-#include "cstring"
+#include <cstring>
+#include <stdexcept>
 
 void MoveCommand::exec(const std::vector<std::string>& params) {
     try{
@@ -15,15 +16,21 @@ void MoveCommand::exec(const std::vector<std::string>& params) {
         double y = std::stod(params[1]);
         plot.Move(x, y);
     }catch (std::invalid_argument&) {
-        //TODO feedback
+        throw std::invalid_argument("Can't convert string to double!");
     }
 }
 
 void OffsetCommand::exec(const std::vector<std::string>& params) {
-    double x = std::stod(params[0]);
-    double y = std::stod(params[1]);
+    try {
+        double x = std::stod(params[0]);
+        double y = std::stod(params[1]);
+        plot.Offset(x, y);
+        
+    } catch(const std::invalid_argument&) {
+        throw std::invalid_argument("Can't convert string to double!");
+    }
+    
 
-    plot.Offset(x, y);
 }
 
 void InfoCommand::exec(const std::vector<std::string>&) {
@@ -42,7 +49,11 @@ void PlotCommand::exec(const std::vector<std::string>& params) {
     // set new command
     double* newExp = new double[params.size()];
     for(size_t i = 0; i < params.size(); i++){
-        newExp[i] = std::stod(params[i]);
+        try{
+            newExp[i] = std::stod(params[i]);
+        } catch (const std::invalid_argument&){
+            throw std::invalid_argument("Can't convert string to double!");
+        }
     }
     exp.set(newExp, params.size());
 }
@@ -51,12 +62,14 @@ void ScaleCommand::exec(const std::vector<std::string>& params) {
     double w = std::stod(params[0]);
     double h = std::stod(params[1]);
 
-    if(Console::getTUI()){
-        plot.Scale(w, h);
-    }else{
-        Console::setWidth(w);
-        Console::setHeight(h);
-    }
+    plot.Scale(w, h);
+    
+    //TODO make it a different command
+    // if(Console::getTUI()){
+    // }else{
+    //     Console::setWidth(w);
+    //     Console::setHeight(h);
+    // }
 }
 
 void StyleCommand::exec(const std::vector<std::string>& params) {
@@ -68,6 +81,8 @@ void StyleCommand::exec(const std::vector<std::string>& params) {
         plot.setPlotter(styles[i]);
         return;
     }
+
+    throw InvalidStyleException();
 }
 
 void TUICommand::exec(const std::vector<std::string>&) {

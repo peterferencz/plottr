@@ -4,7 +4,6 @@
 bool Console::initialized = false;
 bool Console::tui = false;
 std::ostream* Console::out = &std::cout;
-
 Rect<size_t> Console::noninteractiveConsoleSize = {0, 0, 20, 10};
 
 void Console::init(){
@@ -62,6 +61,7 @@ void Console::initNcurses() {
     clear();
     refresh();
 }
+
 
 void Console::destroy() {
     if(!initialized){ throw UnInitializedConsoleException(); }
@@ -129,7 +129,7 @@ std::string Console::getInputOfLength(int l){
     if(!initialized){ throw UnInitializedConsoleException(); }
 
     if(tui){
-        char* input = new char[l];
+        char* input = new char[l+1];
         getnstr(input, l);
         std::string str(input);
         delete[] input;
@@ -138,6 +138,10 @@ std::string Console::getInputOfLength(int l){
         std::string toRet;
         toRet.reserve(l);
         std::getline(std::cin, toRet);
+        if(std::cin.eof()){
+            exit(0);
+        }
+        
         return toRet;
     }
 }
@@ -185,12 +189,14 @@ int Console::getWidth() {
 
 void Console::setHeight(size_t h) {
     if(tui){ return; }
+    if(h == 0) {throw InvalidSizeConsoleException(); }
 
     noninteractiveConsoleSize.h = h;
 }
 
 void Console::setWidth(size_t w) {
     if(tui){ return; }
+    if(w == 0) {throw InvalidSizeConsoleException(); }
 
     noninteractiveConsoleSize.w = w;
 }

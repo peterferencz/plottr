@@ -1,14 +1,13 @@
-\section{Felhasználói dokumentáció}
-
-\subsection{A program célja}
+\chapter{Felhasználói dokumentáció}
+\doxysection{A program célja}
 A felhasználó polinom függvényeket ad meg a programnak, mely annak grafikonját ascii art formájában
 vagy egy fájlba menti, vagy interaktív módban megjeleníti a konzolon.
 
-\subsection{Megkötések}
-A program csak polinom függvényeket tud értelmezni, szögfüggvények / hatványfüggvényekre hibát ír ki.
+\doxysection{Megkötések}
+A program csak polinom függvényeket tud ábrázolni.
 
 
-\subsection{A program által elfogadott kapcsolók}
+\doxysection{A program által elfogadott kapcsolók}
 A programot az alábbi sematika szerint kell futtatni:
 \begin{verbatim}
     plottr [kapcsolók] <függvény>
@@ -17,8 +16,9 @@ A kapcsolókat tetszőleges sorrendben, opcionálisan megadhatók.
 
 \begin{table}[h]
 \centering
+\rowcolors{2}{gray!10}{white}
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|c|c|c|c|}
+\begin{tabular}{@{} l l l p{8cm} @{}}
 Név & Flag & Rövidítés & Magyarázat \\
 \hline
 Interaktív mód & --tui & -t & Interaktív módba állítja a programot \\

@@ -1,9 +1,7 @@
 #include "test_console.h"
 
 
-void testConsole() {
-    std::cout << "---> Test - Console <---" << std::endl;
-    
+void testConsole() {    
     TEST(console, init) {
         EXPECT_THROW(Console::Print(0, 0, "Test!"), UnInitializedConsoleException&);
         EXPECT_NO_THROW(Console::init());
@@ -35,6 +33,9 @@ void testConsole() {
 
         Console::setHeight(72);
         EXPECT_EQ(72, Console::getHeight());
+
+        EXPECT_THROW(Console::setWidth(0), InvalidSizeConsoleException);
+        EXPECT_THROW(Console::setHeight(0), InvalidSizeConsoleException);
         
         Console::destroy();
 

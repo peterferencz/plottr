@@ -233,7 +233,7 @@ void operator delete[](void *p, int, const char *) THROW_NOTHING;
 
 #endif /*FROM_MEMTRACE_CPP*/
 #else
-#pragma message ( "MEMTRACE NOT DEFINED" )
+// #pragma message ( "MEMTRACE NOT DEFINED" )
 #endif /*MEMTRACE*/
 
 #endif /*MEMTRACE_H*/

@@ -1,6 +1,6 @@
 #include "Expression.hpp"
 
-double Expression::valueAt(double x) {
+double Expression::valueAt(double x) const {
     double sum = 0;
     double _x = 1;
     
