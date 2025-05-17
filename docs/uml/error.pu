@@ -1,0 +1,43 @@
+@startuml Errors
+
+top to bottom direction
+
+package "Error handling" {
+    entity std::exception { }
+    
+    together {
+        class UnInitializedConsoleException { }
+        class AlreadyInitializedConsoleException { }
+        class InvalidSizeConsoleException { }
+        class UnableToOpenFileException  {}
+        class InvalidStyleException { }
+        class UnknownCommandException { }
+    }
+
+    std::exception <|-- UnInitializedConsoleException
+    std::exception <|-- AlreadyInitializedConsoleException
+    std::exception <|-- InvalidSizeConsoleException
+    std::exception <|-- UnableToOpenFileException
+    std::exception <|-- InvalidStyleException
+    std::exception <|-- UnknownCommandException
+
+    ' Force vertical alignment using invisible links
+    UnInitializedConsoleException -[hidden]-> AlreadyInitializedConsoleException
+    AlreadyInitializedConsoleException -[hidden]-> InvalidSizeConsoleException
+    InvalidSizeConsoleException -[hidden]-> UnableToOpenFileException
+    UnableToOpenFileException -[hidden]-> InvalidStyleException
+    InvalidStyleException -[hidden]-> UnknownCommandException
+}
+
+class CommandManager {
+    - const std::vector<Command*> commands
+    - std::vector<std::string> parseCommand(const std::string& line)
+    + CommandManager(const std::initializer_list<Command*>& commands)
+    + ~CommandManager()
+    + bool CaptureInput(Front ui)
+    + void parseCLA(size_t argc, char** argv)
+}
+
+CommandManager *-- Command
+
+@enduml

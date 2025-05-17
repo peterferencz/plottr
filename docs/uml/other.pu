@@ -1,0 +1,135 @@
+@startuml PlottR
+
+abstract Screen {
+    + {abstract} virtual void Draw(Rect<int> consoleArea) const
+}
+
+class InfoScreen {
+    - Expression& exp
+    + InfoScreen(Expression& exp)
+}
+
+class PlotterScreen {
+    - Expression& exp
+    - Plotter* plotter
+    - Rect<double> worldArea
+    + PlotterScreen(Expression& exp, Plotter* plotter)
+    
+    + Rect<double> getWorldArea() const
+    + const Plotter* getPlotter() const
+    + void Move(double x, double y)
+    + void Offset(double dx, double dy)
+    + void Scale(double w, double h)
+    + void Draw(Rect<int> consoleArea) const
+    + void setPlotter(Plotter* plotter)
+}
+
+Screen <|-- InfoScreen
+Screen <|-- PlotterScreen
+Expression .. PlotterScreen
+Expression .. InfoScreen
+
+
+
+
+abstract Plotter {
+    # Expression& exp
+    # const char* styleName
+    + Plotter(Expression& exp, const char* styleName)
+    + virtual ~Plotter() = default
+    + {static} const char dot = '*'
+    + virtual const char* getStyleName() const
+    + {abstract} virtual void Draw(Rect<int> consoleArea, Rect<double> worldArea) const
+}
+
+class ASCIIPlotter {
+    + ASCIIPlotter(Expression& exp)
+    + void Draw(Rect<int> consoleArea, Rect<double> worldArea) const
+    - void DrawAxes(Rect<int> consoleArea, Rect<double> worldArea, char** lines) const
+    - void InterpolateDraw(Rect<int> consoleArea, char** lines, Rect<int> interpol) const
+}
+
+class BasicPlotter {
+    + BasicPlotter(Expression& exp)
+    + void Draw(Rect<int> consoleArea, Rect<double> worldArea) const
+}
+
+Plotter <|-- ASCIIPlotter
+Plotter <|-- BasicPlotter
+
+ASCIIPlotter .. Expression
+BasicPlotter .. Expression
+
+
+package "Console interfacing"{
+    class Ncurses {
+
+    }
+
+
+    class Console {
+        - {static} bool initialized
+        - {static} bool tui
+        - {static} Rect<size_t> noninteractiveConsoleSize
+        - {static} std::ostream* out
+        + Console() = delete
+        - {static} void initNcurses()
+        + {static} void init()
+        + {static} void destroy()
+        
+        + {static} bool getTUI()
+        + {static} void setTUI(bool tui)
+        + {static} int getHeight()
+        + {static} int getWidth()
+        + {static} void setHeight(size_t h)
+        + {static} void setWidth(size_t w)
+        + {static} std::string getInputOfLength(int l)
+        + {static} void moveCursor(int x, int y)
+        + {static} void Print(int x, int y, const wchar_t* str)
+        + {static} void Print(int x, int y, const char* str)
+        + {static} void RedirectOutput(std::ostream& newOut)
+        + {static} void setColor(CONSOLECOLOR color = WHITE)
+        + {static} void flush()
+        + {static} void Clear()
+        + {static} void Clear(int x, int y, int w, int h)
+    }
+    note top of Console : "Static class used for interfacing with the ncurses library"
+
+    enum CONSOLECOLOR {
+        BLACK   =	0,
+        RED     =	1,
+        GREEN   =	2,
+        YELLOW  =	3,
+        BLUE    =	4,
+        MAGENTA =	5,
+        CYAN    =	6,
+        WHITE   =	7
+    }
+
+    CONSOLECOLOR *-- Console
+    Console *-- Ncurses
+}
+
+
+class Expression {
+    - double* coefficients
+    - size_t coefficientsLen
+    + Expression()
+    + Expression(double* coefficients, size_t coefficientsLen)
+    + void set(double* coefficients, size_t coefficientsLen)
+    + std::pair<double*, size_t> getCoefficients() const
+    + double valueAt(double x) const
+}
+
+class Front {
+    - Screen* currentDisplay
+    + Front(Screen* display)
+    + void Draw()
+    + Screen& getScreen() const
+    + void setScreen(Screen& screen)
+    + std::string getInput()
+}
+
+Front *-- Screen
+
+@enduml

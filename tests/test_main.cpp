@@ -3,7 +3,7 @@
 #include "test_plotter_basic.h"
 #include "test_commandSuite.h"
 
-int main(void) {
+int testMain(void) {
 #ifdef CPORTA
     GTINIT(std::cin);   //Jporta
 #endif

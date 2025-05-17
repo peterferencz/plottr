@@ -19,37 +19,36 @@ WARNINGS = NO
 
 LATEX_HEADER = ../docs/header.tex
 LATEX_FOOTER = ../docs/footer.tex
-LATEX_EXTRA_FILES = ../docs/front.tex ../docs/userspec.tex ../docs/devspec.tex ../docs/res/BMEKicsi.png ../docs/res/VIK.png
+LATEX_EXTRA_FILES = ../docs/front.tex ../docs/userspec.tex ../docs/devspec.tex ../docs/res/BMEKicsi.png ../docs/res/VIK.png ../docs/uml/PlottR.png ../docs/uml/Errors.png ../docs/uml/Commands.png
 
 # Enable class diagram generation
 CLASS_DIAGRAMS = NO
 CLASS_GRAPH = NO
 COLLABORATION_GRAPH = NO
 
-UML_LOOK             = YES
-UML_LIMIT_NUM_FIELDS = 50
-TEMPLATE_RELATIONS   = YES
+# UML_LOOK             = YES
+# UML_LIMIT_NUM_FIELDS = 50
+# TEMPLATE_RELATIONS   = YES
 
-HIDE_UNDOC_RELATIONS = NO
+HIDE_UNDOC_RELATIONS  = NO
+HIDE_UNDOC_MEMBERS    = YES
+HIDE_UNDOC_CLASSES    = YES
+
+DOTFILE_DIRS         = dot
 
 # Where the UML diagrams will be placed
 OUTPUT_DIRECTORY = ./docs
 LATEX_OUTPUT = .
 
-# Whether to extract all the documentation from your code (optional)
-# EXTRACT_ALL = YES
-
 SHOW_FILES = NO
 SHOW_USED_FILES = NO
 
-
+EXTRACT_ALL = NO
 EXTRACT_PRIVATE     = YES
 EXTRACT_STATIC      = YES
 EXTRACT_LOCAL_CLASSES = YES
 EXTRACT_ANON_NSPACES = NO
 EXTRACT_PRIV_VIRTUAL = YES
-
-FULL_MEMBER_DOC = NO
 
 ENABLE_PREPROCESSING    = YES
 MACRO_EXPANSION         = YES
@@ -58,6 +57,8 @@ EXPAND_ONLY_PREDEF      = NO
 GENERATE_TREEVIEW = NO
 LATEX_HIDE_INDICES = YES
 
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
 
 # Other settings (optional)
 INPUT = ../src ../lib # Set your source code directory

@@ -1,5 +1,8 @@
 #include "Console.hpp"
 
+#ifdef CPORTA
+WINDOW* stdscr = (WINDOW*) nullptr;
+#endif
 
 bool Console::initialized = false;
 bool Console::tui = false;

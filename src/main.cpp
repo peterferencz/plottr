@@ -45,7 +45,6 @@ int main(int argc, char** argv){
         new StyleCommand(plotterScreen, {
             basicPlotter,
             new ASCIIPlotter(expression),
-            new UnicodePlotter(expression)
         }),
         new OutCommand(plotterScreen)
     };

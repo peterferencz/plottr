@@ -3,11 +3,11 @@
 
 void testConsole() {    
     TEST(console, init) {
-        EXPECT_THROW(Console::Print(0, 0, "Test!"), UnInitializedConsoleException&);
+        EXPECT_THROW(Console::Print(0, 0, "Test!"), const UnInitializedConsoleException&);
         EXPECT_NO_THROW(Console::init());
         EXPECT_EQ(false, Console::getTUI());
         #ifdef CPORTA
-        EXPECT_THROW(Console::setTUI(true), NonInteractiveEnvironmentConsoleException);
+        EXPECT_THROW(Console::setTUI(true), const NonInteractiveEnvironmentConsoleException&);
         #endif
         EXPECT_NO_THROW(Console::destroy());
     } ENDM
@@ -21,7 +21,7 @@ void testConsole() {
         Console::RedirectOutput(std::cout);
         Console::destroy();
 
-        EXPECT_EQ("Hello!\n", oss.str());
+        EXPECT_EQ(std::string("Hello!\n"), oss.str());
     } ENDM
 
     TEST(console, dimensions) {
@@ -34,8 +34,8 @@ void testConsole() {
         Console::setHeight(72);
         EXPECT_EQ(72, Console::getHeight());
 
-        EXPECT_THROW(Console::setWidth(0), InvalidSizeConsoleException);
-        EXPECT_THROW(Console::setHeight(0), InvalidSizeConsoleException);
+        EXPECT_THROW(Console::setWidth(0), const InvalidSizeConsoleException&);
+        EXPECT_THROW(Console::setHeight(0), const InvalidSizeConsoleException&);
         
         Console::destroy();
 

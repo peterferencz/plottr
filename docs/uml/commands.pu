@@ -1,0 +1,98 @@
+@startuml Commands
+
+package Commands{
+    abstract Command {
+        - const char* name
+        - const char shortName
+        - const int paramCount
+
+        + Command(const char* name, const char shortName, const int paramCount)
+        + virtual ~Command() = default
+        + virtual const char* getName() const
+        + virtual char getShortName() const
+        + virtual int getParamCount() const
+        + {abstract} virtual void exec(const std::vector<std::string>& params)
+    }
+
+    class InfoCommand {
+        - Front& ui
+        - InfoScreen& screen
+
+        + InfoCommand(Front& ui, InfoScreen& info)
+        + ~InfoCommand()
+        + void exec(const std::vector<std::string>& params)
+    }
+
+    class MoveCommand {
+        - PlotterScreen& plot
+        + MoveCommand(PlotterScreen& plotter)
+        + ~MoveCommand()
+        + void exec(const std::vector<std::string>& params)
+    }
+
+    class OffsetCommand {
+        - PlotterScreen& plot
+        + OffsetCommand(PlotterScreen& plotter)
+        + ~OffsetCommand()
+        + void exec(const std::vector<std::string>& params)
+    }
+
+    class PlotCommand {
+        - Front& ui
+        - PlotterScreen& screen
+        - Expression& exp
+        + PlotCommand(Front& ui, PlotterScreen& info, Expression& exp)
+        + ~PlotCommand() {}
+        + void exec(const std::vector<std::string>& params)
+    }
+
+    class OutCommand {
+        - PlotterScreen& plot
+        + OutCommand(PlotterScreen& plotter)
+        + ~OutCommand()
+        + void exec(const std::vector<std::string>& params)
+    }
+
+    class StyleCommand {
+        - PlotterScreen& plot
+        - std::vector<Plotter*> styles
+        + StyleCommand(PlotterScreen& plotter, std::vector<Plotter*> styles)
+        + ~StyleCommand()
+        + void exec(const std::vector<std::string>& params)
+    }
+
+    class TUICommand {
+        + TUICommand()
+        + ~TUICommand()
+        + void exec(const std::vector<std::string>& params)
+    }
+
+    class ScaleCommand {
+        - PlotterScreen& plot
+        + ScaleCommand(PlotterScreen& plotter)
+        + ~ScaleCommand() {}
+        + void exec(const std::vector<std::string>& params)
+    }
+}
+
+
+
+Command <|-- InfoCommand
+Command <|-- MoveCommand
+Command <|-- OffsetCommand
+Command <|-- PlotCommand
+Command <|-- OutCommand
+Command <|-- StyleCommand
+Command <|-- TUICommand
+Command <|-- ScaleCommand
+
+' Force layout into 2 vertical columns using invisible links
+InfoCommand -[hidden]-> MoveCommand
+MoveCommand -[hidden]-> OffsetCommand
+OffsetCommand -[hidden]-> PlotCommand
+
+OutCommand -[hidden]-> StyleCommand
+StyleCommand -[hidden]-> TUICommand
+TUICommand -[hidden]-> ScaleCommand
+
+@enduml

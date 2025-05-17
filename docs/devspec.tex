@@ -22,12 +22,10 @@ hívja meg azok \textit{exec} függvényeit a megadott paraméterekkel.
 % \end{center}
 
 \doxysection{A Screen osztálycsoport}
-Az interaktív mód során kapott parancsokat a program a \textit{Front} oszály fogja
+Az interaktív mód során kapott parancsokat a program a \textit{Front} oszályon keresztül fogja
 megkapni, mely a különböző \textit{Screen}-ek váltogatását kezeli.
 
-% \begin{center}
-%     \makebox[\textwidth]{\includegraphics[height=7cm]{uml/Screens.png}}
-% \end{center}
+
 
 \doxysection{A grafikonok kirajzolása}
 A grafikonok kirajzolását a \textit{Plotter} osztály leszármazottjai teszik,
@@ -36,8 +34,6 @@ akik különböző módon ábrázolnak:\\
 a függvénynek megfelelt y értéket.\\
 \textbf{ASCIIPlotter}: A grafikon kirajzolása csak ASCII karakterekkel történik,
 ezen felül pontok helyett vonalakkal dolgozik.\\
-\textbf{UnicodePlotter}: A grafikon kirajzolása Unicode karakterekkel történik,
-szintén vonalakkal dolgozik\\
 
 % \begin{center}
 %     \makebox[\textwidth]{\includegraphics[height=5cm]{uml/Plotting.png}}
@@ -47,6 +43,17 @@ szintén vonalakkal dolgozik\\
 % \begin{center}
 %     \makebox[\textwidth]{\includegraphics[height=9cm]{uml/PlottR.png}}
 % \end{center}
+
+\doxysection{A program}
+\begin{center}
+    \makebox[\textwidth]{\includegraphics[height=11cm]{PlottR.png}}
+\end{center}
+\begin{center}
+    \makebox[\textwidth]{\includegraphics[height=11cm]{Errors.png}}
+\end{center}
+\begin{center}
+    \makebox[\textwidth]{\includegraphics[height=11cm]{Commands.png}}
+\end{center}
 
 \doxysection{A program fejlesztéséhez használt más programok}
 \begin{itemize}

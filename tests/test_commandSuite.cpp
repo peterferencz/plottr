@@ -26,7 +26,7 @@ void testCommandSuite() {
         EXPECT_EQ(-76, plotterScreen.getWorldArea().x);
         EXPECT_EQ(89723.74, plotterScreen.getWorldArea().y);
 
-        EXPECT_THROW(cmd.exec({"not a number", "other"}), std::invalid_argument);
+        EXPECT_THROW(cmd.exec({"not a number", "other"}), const std::invalid_argument&);
     } ENDM
 
     TEST(commands, TUICommand){
@@ -48,7 +48,7 @@ void testCommandSuite() {
         cmd.exec({"0", "0"});
         //TODO test exec
 
-        EXPECT_THROW(cmd.exec({"not a number", "other"}), std::invalid_argument);
+        EXPECT_THROW(cmd.exec({"not a number", "other"}), const std::invalid_argument&);
     } ENDM
 
     TEST(commands, ScaleCommand){
@@ -57,7 +57,7 @@ void testCommandSuite() {
         cmd.exec({"0", "0"});
         //TODO test exec
 
-        EXPECT_THROW(cmd.exec({"not a number", "other"}), std::invalid_argument);
+        EXPECT_THROW(cmd.exec({"not a number", "other"}), const std::invalid_argument&);
     } ENDM
 
     TEST(commands, InfoCommand){
@@ -74,9 +74,9 @@ void testCommandSuite() {
         cmd.exec({});
         EXPECT_EQ(&ui.getScreen(), &plotterScreen);
 
-        EXPECT_THROW(cmd.exec({"not a number", "other"}), std::invalid_argument);
+        EXPECT_THROW(cmd.exec({"not a number", "other"}), const std::invalid_argument&);
         cmd.exec({"5689", "-9898843", "0.3"});
-        EXPECT_EQ(3, expression.getCoefficients().second);
+        EXPECT_EQ((size_t) 3, expression.getCoefficients().second);
         EXPECT_EQ(5689, expression.getCoefficients().first[0]);
         EXPECT_EQ(-9898843, expression.getCoefficients().first[1]);
         EXPECT_EQ(0.3, expression.getCoefficients().first[2]);
@@ -93,7 +93,7 @@ void testCommandSuite() {
         cmd.exec({"ascii"});
         EXPECT_EQ(plotterScreen.getPlotter(), asciiPlotter);
 
-        EXPECT_THROW(cmd.exec({"invalid"}), InvalidStyleException);
+        EXPECT_THROW(cmd.exec({"invalid"}), const InvalidStyleException&);
     } ENDM
 
 

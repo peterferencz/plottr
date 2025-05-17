@@ -21,6 +21,14 @@ workspace(Name.."_ws")
         defines { "NDEBUG" }
         optimize "Full"
         symbols "Off"
+    filter "configurations:Jporta"
+        defines {"MEMTRACE", "JPORTA", "CPORTA"}
+        buildoptions {
+	    	"-Wall", "-Werror", "-O0", "-Wextra", "-Wpedantic", "-fprofile-arcs -ftest-coverage"
+	    }
+        linkoptions {
+            "--coverage", "-e,testMain"
+        }
     
 project(Name)
     kind "ConsoleApp"
@@ -48,9 +56,6 @@ project(Name)
         defines { "DEBUG", "MEMTRACE", "JPORTA", "CPORTA" }
         optimize "Off"
         symbols "On"
-        buildoptions {
-	    	"-Wall", "-Wextra", "-Wpedantic"
-	    }
         linkoptions {} -- Remowe ncurses link
 
 
@@ -88,10 +93,23 @@ project("Docs")
     location(buildDirectory)
 
     buildcommands {
+        "plantuml ../docs/uml",
         "doxygen ../Doxyfile",
         "make -C ../"..buildDirectory.."/docs pdf"
     }
   
     cleancommands {
         "make -C "..buildDirectory.."/docs clean"
+    }
+
+project("Zip")
+    kind "Makefile"
+    location(buildDirectory)
+
+    buildcommands {
+        "mkdir -p zip",
+        "cp ../src/* ./zip",
+        "cp ../lib/* ./zip",
+        "cp ../tests/* ./zip",
+        "zip -jr zipped.zip ./zip/*"
     }

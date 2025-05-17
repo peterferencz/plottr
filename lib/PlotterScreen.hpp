@@ -9,7 +9,6 @@
 #include "Rect.h"
 #include "BasicPlotter.hpp"
 #include "ASCIIPlotter.hpp"
-#include "UnicodePlotter.hpp"
 
 /// @brief A grafikon kirajzolásáért felelős képernyő.
 /// A PlotterScreen osztály kezeli a kirajzolt világ, a hozzá tartozó kifejezést,
