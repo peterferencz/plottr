@@ -27,7 +27,7 @@ workspace(Name.."_ws")
 	    	"-Wall", "-Werror", "-O0", "-Wextra", "-Wpedantic", "-fprofile-arcs -ftest-coverage"
 	    }
         linkoptions {
-            "--coverage", "-e,testMain"
+            "--coverage"
         }
     
 project(Name)
@@ -80,7 +80,8 @@ project(Name.."Test")
     }
 
     linkoptions {
-        "-lncursesw"      -- Link ncurses (wide character) library
+        "-lncursesw",      -- Link ncurses (wide character) library
+        "-e,testMain"
     }
 
     includedirs {

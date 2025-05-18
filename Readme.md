@@ -9,14 +9,14 @@ You can find the full documentation in [./docs/archive.pdf](./docs/archive).
 Building is done via the [Premake5](https://premake.github.io/) build tool, which generates the makefiles for building.
 
 Targets:
- - PlottR
- - PlottRTest
- - Docs
+ - PlottR:           Main program
+ - PlottRTest:       Test functionality
+ - Docs:             Compile specification
 
 Configurations:
- - Debug
- - Release
- - Jporta
+ - Debug:            No optimization
+ - Release:          Full optimization, Disable symbols
+ - Jporta:           Specific for university submission
 
 ### Usage
 |Név | Flag | Rövidítés | Magyarázat \\
