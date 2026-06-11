@@ -89,12 +89,13 @@ void CommandManager::parseCLA(size_t argc, char** argv){
             if(cmd->getShortName() != ch){ continue; }
             foundCommand = true;
             
-            // const char** params = new const char*[cmd->getParamCount()];
             std::vector<std::string> params;
             params.reserve(cmd->getParamCount());
 
             size_t i = 0;
-            params[i++] = optarg;
+            if(cmd->getParamCount() > 0 && optarg != nullptr){
+                params[i++] = optarg;
+            }
 
             // Collect more space separated arguments
             while ((size_t)optind < argc && argv[optind][0] != '-'){

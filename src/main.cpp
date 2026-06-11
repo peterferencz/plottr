@@ -19,11 +19,7 @@
 int main(int argc, char** argv){
     Console::init();
     // Main polinomial expressionn
-    double* defaultArray = new double[3];
-    defaultArray[0] = 0;
-    defaultArray[1] = 1;
-    defaultArray[2] = 0;
-    Expression expression(defaultArray, 3);
+    Expression expression;
 
     Plotter* basicPlotter = new BasicPlotter(expression);
 
@@ -69,6 +65,4 @@ int main(int argc, char** argv){
     }
 
     Console::destroy();
-
-    delete[] defaultArray;
 }

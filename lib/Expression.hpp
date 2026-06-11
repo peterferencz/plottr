@@ -15,13 +15,25 @@ private:
 
 public:
     Expression()
-    : coefficients(nullptr),  coefficientsLen(0) {}
+    : coefficients(nullptr),  coefficientsLen(0) {
+        coefficients = new double[3];
+        coefficients[0] = 0;
+        coefficients[1] = 1;
+        coefficients[2] = 0;
+        coefficientsLen = 3;
+    }
 
     /// @brief Adott együtthatósorozattal létrehozott kifejezés.
     /// @param coefficients A polinom együtthatói.
     /// @param coefficientsLen Az együtthatók száma.
     Expression(double* coefficients, size_t coefficientsLen)
     : coefficients(coefficients), coefficientsLen(coefficientsLen) {}
+
+    ~Expression(){
+        delete[] coefficients;
+        coefficients = nullptr;
+        coefficientsLen = 0;
+    }
     
     /// @brief Új együtthatók beállítása.
     /// @param coefficients A polinom új együtthatói.
